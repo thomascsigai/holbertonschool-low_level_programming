@@ -2,9 +2,9 @@
 #include <stdio.h>
 
 /**
- * main - Prints the last digit of a random number
+ * main - Prints the alphabet in lowercase
  *
- * Return: 1
+ * Return: 0
  */
 int main(void)
 {
