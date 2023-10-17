@@ -10,7 +10,7 @@
 int print_sign(int n)
 {
 	int nSign = 0;
-	char cSign = '0'; 
+	char cSign = '0';
 
 	if (n != 0)
 	{
