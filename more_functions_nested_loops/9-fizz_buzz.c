@@ -2,7 +2,7 @@
 #include "main.h"
 
 /**
- * fizz_buzz - draw fizz buzz
+ * main - draws fizz buzz
  *
  * Return: 0
  */
