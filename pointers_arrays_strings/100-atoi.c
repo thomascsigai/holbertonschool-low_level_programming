@@ -9,7 +9,7 @@ int _atoi(char *s)
 	int i = 0;
 	int retValue = 0;
 	int retValueSign = 1;
-	int startOfInt = 0;
+	int startOfIntChain = 0;
 
 	while (s[i])
 	{
@@ -18,17 +18,19 @@ int _atoi(char *s)
 
 		if (s[i] > 47 && s[i] < 58)
 		{
-			startOfInt = i;
+			startOfIntChain = i;
 			break;
 		}
 		i++;
 	}
 
-	while (s[startOfInt] > 47 && s[startOfInt] < 58)
+	while (s[startOfIntChain] > 47 && s[startOfIntChain] < 58)
 	{
 		retValue *= 10;
-		retValue += s[startOfInt] - 48;
-		startOfInt++;
+		if (retValue == 2147483640 && s[startOfIntChain] >= 56)
+			return (-2147483647 - 1);
+		retValue += s[startOfIntChain] - 48;
+		startOfIntChain++;
 	}
 
 	return (retValue * retValueSign);
