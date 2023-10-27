@@ -20,5 +20,8 @@ char *_strchr(char *s, char c)
 		i++;
 	}
 
+	if (c == '\0')
+		retPointer = s + i;
+
 	return (retPointer);
 }
