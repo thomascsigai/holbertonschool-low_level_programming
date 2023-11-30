@@ -56,7 +56,10 @@ dlistint_t *insertNodeAtCurrentPosition(dlistint_t *node, dlistint_t *current,
 	else
 	{
 		if (*head && (*head)->next)
+		{
 			node = assignNodeValues(node, *head, NULL, n);
+			(*head)->prev = node;
+		}
 		else
 			node = assignNodeValues(node, NULL, NULL, n);
 		*head = node;
