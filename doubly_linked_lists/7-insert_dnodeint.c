@@ -10,11 +10,57 @@
  * Return: the adress of the node
  */
 dlistint_t *assignNodeValues(dlistint_t *node, dlistint_t *next,
-dlistint_t *prev, int n)
+				dlistint_t *prev, int n)
 {
 	node->n = n;
 	node->next = next;
 	node->prev = prev;
+
+	return (node);
+}
+
+/**
+ * insertNodeAtEndOfList - inserts a node at the end of the list
+ * @node: the node to add
+ * @tail: the tail of the list
+ * @n: the element value
+ *
+ * Return: the adress of the new node
+ */
+dlistint_t *insertNodeAtEndOfList(dlistint_t *node, dlistint_t *tail, int n)
+{
+	node = assignNodeValues(node, NULL, tail, n);
+	tail->next = node;
+
+	return (node);
+}
+
+/**
+ * insertNodeAtCurrentPosition - inserts a node at the current position
+ * @node: the node to add
+ * @current: the current position
+ * @head: the head of the list
+ * @n: the element value
+ *
+ * Return: the adress of the new node
+ */
+dlistint_t *insertNodeAtCurrentPosition(dlistint_t *node, dlistint_t *current,
+				dlistint_t **head, int n)
+{
+	if (current && current->prev)
+	{
+		node = assignNodeValues(node, current, current->prev, n);
+		current->prev->next = node;
+		current->prev = node;
+	}
+	else
+	{
+		if (*head && (*head)->next)
+			node = assignNodeValues(node, *head, NULL, n);
+		else
+			node = assignNodeValues(node, NULL, NULL, n);
+		*head = node;
+	}
 
 	return (node);
 }
@@ -34,7 +80,9 @@ dlistint_t *insert_dnodeint_at_index(dlistint_t **h, unsigned int idx, int n)
 
 	if (!h)
 		return (NULL);
+
 	current = *h;
+
 	while (current && nodeCount++ != idx)
 	{
 		tail = current;
@@ -49,8 +97,10 @@ dlistint_t *insert_dnodeint_at_index(dlistint_t **h, unsigned int idx, int n)
 	{
 		if (nodeCount == idx)
 		{
-			newNode = assignNodeValues(newNode, NULL, tail, n);
-			tail->next = newNode;
+			if (idx == 0)
+				newNode = insertNodeAtCurrentPosition(newNode, current, h, n);
+			else
+				newNode = insertNodeAtEndOfList(newNode, tail, n);
 		}
 		else
 		{
@@ -59,13 +109,7 @@ dlistint_t *insert_dnodeint_at_index(dlistint_t **h, unsigned int idx, int n)
 		}
 	}
 	else
-	{
-		newNode = assignNodeValues(newNode, current, current->prev, n);
-		if (current->prev)
-			current->prev->next = newNode;
-		else
-			*h = newNode;
-		current->prev = newNode;
-	}
+		insertNodeAtCurrentPosition(newNode, current, h, n);
+
 	return (newNode);
 }
